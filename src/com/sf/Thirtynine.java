@@ -1,5 +1,6 @@
 package com.sf;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,31 +30,31 @@ import java.util.List;
  */
 public class Thirtynine {
 
-    public static void main(String[] args) {
-
-    }
-
+    static List<List<Integer>> a = new ArrayList<>();
+    static List<Integer> b = new ArrayList<>();
+    static int sum = 0;
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-
-        return null;
+        a.clear();
+        b.clear();
+        sum = 0;
+        backTracking(0,target,candidates);
+        return a;
     }
-    private boolean check(int tmpSum,int target,int index,int[] candidates,List<Integer> tempList,List<List> res){
-        if(index >= candidates.length){
-            return false;
+    public void backTracking(int index,int target,int[] candidates){
+        if(sum > target){
+            return;
         }
-        if(tmpSum + candidates[index] > target){
-            return false;
+        if(sum == target){
+            a.add(new ArrayList<>(b));
+            return;
         }
-        if(tmpSum + candidates[index] == target){
-            tempList.add(candidates[index]);
-            res.add(tempList);
-            return false;
+        for(int i = index; i < candidates.length; i++){
+            sum+=candidates[i];
+            b.add(candidates[i]);
+            backTracking(i,target,candidates);
+            sum-=candidates[i];
+            b.remove(b.size()-1);
         }
-        if(tmpSum + candidates[index] < target){
-            return true;
-        }
-        return false;
     }
-
 
 }
