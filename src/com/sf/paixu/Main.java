@@ -1,10 +1,12 @@
 package com.sf.paixu;
 
+import java.util.Queue;
+
 public class Main {
     public static void main(String[] args) {
         int[] x = new int[]{1,3,61,2,4,6};
-        int[] ints = shellSort(x);
-        heapSort(x);
+//        int[] ints = shellSort(x);
+//        heapSort(x);
         for (int anInt : x) {
             System.out.println(anInt);
         }
@@ -73,6 +75,8 @@ public class Main {
         return nums;
     }
 
+
+
     static void sort(int[] nums){
         int[] x = new int[nums.length];
         sort(nums,0,nums.length-1,x);
@@ -137,6 +141,39 @@ public class Main {
         arr[i] = temp;
     }
 
+
+    public static void quickSort(int[] num,int low,int high){
+        if(low < high){
+            int index = getIndex(num,low,high);
+            quickSort(num, low, index - 1);
+            quickSort(num, index + 1, high);
+        }
+
+    }
+
+    public static int getIndex(int[] num,int low,int high){
+        // 基准数据
+        int tmp = num[low];
+        while (low < high) {
+            // 当队尾的元素大于等于基准数据时,向前挪动high指针
+            while (low < high && num[high] >= tmp) {
+                high--;
+            }
+            // 如果队尾元素小于tmp了,需要将其赋值给low
+            num[low] = num[high];
+            // 当队首元素小于等于tmp时,向前挪动low指针
+            while (low < high && num[low] <= tmp) {
+                low++;
+            }
+            // 当队首元素大于tmp时,需要将其赋值给high
+            num[high] = num[low];
+
+        }
+        // 跳出循环时low和high相等,此时的low或high就是tmp的正确索引位置
+        // 由原理部分可以很清楚的知道low位置的值并不是tmp,所以需要将tmp赋值给arr[low]
+        num[low] = tmp;
+        return low; // 返回tmp的正确位置
+    }
 
 
 }
